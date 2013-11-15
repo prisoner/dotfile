@@ -1,0 +1,41 @@
+# set PATH so it includes user's private bin if it exists
+if [ -d "$HOME/bin" ] ; then
+    PATH="$HOME/bin:$PATH"
+fi
+
+export LANGUAGE="zh_CN:en"
+export LC_MESSAGES="zh_CN.UTF-8"
+export LC_CTYPE="zh_CN.UTF-8"
+export LC_COLLATE="zh_CN.UTF-8"
+
+#用户配置
+export JAVA_HOME="$HOME/soft/java"
+export PATH="$JAVA_HOME/bin:$PATH"
+
+export REDIS_HOME="$HOME/soft/redis"
+export PATH="$REDIS_HOME/bin:$PATH"
+
+export MVN_HOME="$HOME/soft/maven"
+export PATH="$MVN_HOME/bin:$PATH"
+
+export GOROOT="$HOME/soft/go"
+export GOPATH="$HOME/var/go:$HOME/workspace/toy/go"
+export PATH="$GOROOT/bin:$PATH"
+
+export PHANTOMJSPATH="$HOME/soft/phantomjs"
+export PATH="$PHANTOMJSPATH/bin:$PATH"
+
+export ANT_HOME="$HOME/soft/ant"
+export PATH="$ANT_HOME/bin:$PATH"
+
+export PB_HOME="$HOME/soft/protobuf"
+export PATH="$PB_HOME/bin:$PATH"
+
+#export PATH="$HOME/soft/google_appengine:$PATH"
+
+export VAGRANT_HOME="$HOME/var/workspace/vagrant"
+
+export ADT_HOME="$HOME/soft/adt/sdk"
+export PATH="$ADT_HOME/platform-tools:$ADT_HOME/tools:$PATH"
+
+export PATH="$HOME/bin:$PATH"
