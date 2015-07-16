@@ -1,0 +1,8 @@
+#!/bin/bash
+
+source "$HOME/.dock-formulas/common"
+
+force_stop ipython
+
+run -d -v /home/chenpeng/workspace/ipnotebook:/data -p 8181:8181 --name ipython chenpeng/ipython
+

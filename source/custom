@@ -1,0 +1,25 @@
+#禁止ssh自动补全
+zstyle ':completion:*' hosts off
+
+#添加pythonpy自动补全 https://github.com/Russell91/pythonpy
+autoload bashcompinit
+bashcompinit
+source /etc/bash_completion.d/pycompletion.sh
+
+##在命令前插入 sudo {{{
+#定义功能
+sudo-command-line() {
+    [[ -z $BUFFER ]] && zle up-history
+    [[ $BUFFER != sudo\ * ]] && BUFFER="sudo $BUFFER"
+#光标移动到行末
+    zle end-of-line
+}
+zle -N sudo-command-line
+#定义快捷键为： [Esc] [Esc]
+bindkey "\e\e" sudo-command-line
+#}}}
+
+#关闭纠错功能.
+unsetopt correct_all
+
+#eval "$(fasd --init auto)"

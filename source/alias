@@ -10,9 +10,39 @@ if [ -x /usr/bin/dircolors ]; then
     alias egrep='egrep --color=auto'
 fi
 
-l='ls -la'
-la='ls -lA'
-ll='ls -l -h --file-type --color=auto --time-style="+[%Y-%m-%d %H:%M:%S]"'
-ls='ls --color=tty'
-lsa='ls -lah'
-md='mkdir -p'
+alias l='ls -la'
+alias la='ls -lA'
+alias ll='ls -l -h --file-type --color=auto --time-style="+[%Y-%m-%d %H:%M:%S]"'
+alias ls='ls --color=tty'
+alias lsa='ls -lah'
+alias md='mkdir -p'
+alias grep='egrep --color=auto --exclude-dir={.bzr,.cvs,.git,.hg,.svn}'
+alias .='pwd'
+alias top='htop'
+alias pyc='find . -name "*.pyc" -exec rm {} \;'
+alias psgr='ps aux | grep -v grep | grep '
+
+#--------docker-------------
+alias dki="docker run -t -i -P"
+alias dip="docker inspect --format '{{ .NetworkSettings.IPAddress }}'"
+alias dps="docker ps"
+alias dimgs="docker images"
+
+dcgrep() {
+  if [ $# -gt 0 ]; then
+    docker ps -a | grep $1 | awk '{print $1}';
+  else
+    docker ps -a | awk '{print $1}';
+  fi
+}
+
+digrep() {
+  if [ $# -gt 0 ]; then
+    docker images -a | grep $1 | awk '{print $3}';
+  else
+    docker images -a | awk '{print $3}';
+  fi
+}
+
+dbld() { docker build -t="$1" .; }
+

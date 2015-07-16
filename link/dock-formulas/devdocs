@@ -1,0 +1,10 @@
+#!/bin/bash
+
+source "${BASH_SOURCE%/*}/../common"
+
+force_stop devdocs
+
+run --detach \
+    --publish 9292:9292 \
+    --name devdocs \
+    catchy/devdocs:v2

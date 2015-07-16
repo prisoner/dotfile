@@ -8,7 +8,18 @@ export LC_MESSAGES="zh_CN.UTF-8"
 export LC_CTYPE="zh_CN.UTF-8"
 export LC_COLLATE="zh_CN.UTF-8"
 
+#for color man
+export LESS_TERMCAP_mb=$'\E[01;34m'
+export LESS_TERMCAP_md=$'\E[01;34m'
+export LESS_TERMCAP_me=$'\E[0m'
+export LESS_TERMCAP_se=$'\E[0m'
+export LESS_TERMCAP_so=$'\E[01;44;33m'
+export LESS_TERMCAP_ue=$'\E[0m'
+export LESS_TERMCAP_us=$'\E[01;33m'
+
 #用户配置
+export PATH="$DOTFILE/bin:$PATH"
+
 export JAVA_HOME="$HOME/soft/java"
 export PATH="$JAVA_HOME/bin:$PATH"
 
@@ -19,7 +30,7 @@ export MVN_HOME="$HOME/soft/maven"
 export PATH="$MVN_HOME/bin:$PATH"
 
 export GOROOT="$HOME/soft/go"
-export GOPATH="$HOME/var/go:$HOME/workspace/toy/go"
+export GOPATH="$HOME/var/go:$HOME/workspace/go"
 export PATH="$GOROOT/bin:$PATH"
 
 export PHANTOMJSPATH="$HOME/soft/phantomjs"
@@ -36,6 +47,23 @@ export PATH="$PB_HOME/bin:$PATH"
 export VAGRANT_HOME="$HOME/var/workspace/vagrant"
 
 export ADT_HOME="$HOME/soft/adt/sdk"
+export ANDROID_HOME="$HOME/soft/adt/sdk"
 export PATH="$ADT_HOME/platform-tools:$ADT_HOME/tools:$PATH"
 
-export PATH="$HOME/bin:$PATH"
+export SCALA_HOME="$HOME/soft/scala"
+export PATH="$SCALA_HOME/bin:$PATH"
+
+export GRADLE_HOME="$HOME/soft/gradle"
+export PATH="$GRADLE_HOME/bin:$PATH"
+
+export WORKON_HOME="/mnt/workspace/virtualenvs"
+export PROJECT_HOME="$HOME/workspace/python"
+
+export CASPERJS_HOME="$HOME/soft/casperjs"
+export PATH="$CASPERJS_HOME/bin:$PATH"
+
+export GROOVY_HOME="$HOME/soft/groovy"
+export PATH="$GROOVY_HOME/bin:$PATH"
+
+[[ -s $HOME/.rvm/scripts/rvm ]] && source $HOME/.rvm/scripts/rvm
+

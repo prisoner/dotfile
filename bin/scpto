@@ -1,0 +1,6 @@
+#!/bin/sh
+
+file=$1
+sname=`basename $file`
+scp -i ~/temp/key/root_rsa $file $2
+echo "scp $sname to $2"

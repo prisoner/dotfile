@@ -1,0 +1,6 @@
+#!/bin/bash
+
+source "$HOME/.dock-formulas/common"
+
+force_stop mongodb
+run -d --volumes-from mongodb_data --name mongodb -p 27017:27017 chenpeng/mongodb

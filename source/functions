@@ -1,0 +1,36 @@
+# Wrap ssh commmand to allow smart pane behavior in tmux.
+#
+# Lifted from https://github.com/moonboots/tmux-ssh/blob/master/tmux-sshrc
+#
+# After opening a tmux window and ssh-ing into another server, new panes will
+# open already ssh-ed to the server.
+function sshto() {
+	SIP=`echo "-i $*" | cut -d '@' -f 2 | cut -d '.' -f 3,4`
+  if [ -n "$TMUX" ] # set only if within running tmux
+  then
+    window_index=$(tmux display-message -p '#I')
+
+    # arbitrary environment variable name to remember ssh args like server
+    # hostname so we can connect again.
+    session_variable_name="window_${window_index}_ssh_args"
+
+    # save in tmux session variable
+    tmux setenv $session_variable_name "$SIP"
+
+    # set window title
+    tmux rename-window "$SIP"
+
+    # run ssh
+    #/usr/bin/ssh $*
+    ssh -i ~/temp/key/root_rsa "root@${1}"
+
+    # unset variable so new panes don't continue ssh-ing to this server
+    tmux setenv -u $session_variable_name
+  else
+		guake -r $SIP
+    ssh -i ~/temp/key/root_rsa "root@${1}"
+  fi
+
+  # rename title back
+  tmux rename-window zsh
+}

@@ -25,11 +25,14 @@ ZSH_THEME="robbyrussell"
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
-plugins=(git golang auotjump)
+plugins=(zaw git golang fasd mvn git-flow docker gitignore)
 
-source $ZSH/oh-my-zsh.sh
 
 DOTFILE=$HOME/.dotfile
-
-source $DOTFILE/source/alias
 source $DOTFILE/source/export
+source $ZSH/oh-my-zsh.sh
+source $DOTFILE/source/alias
+#source $DOTFILE/source/export
+source $DOTFILE/source/functions
+source $DOTFILE/source/custom
+

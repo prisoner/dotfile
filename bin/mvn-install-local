@@ -1,0 +1,29 @@
+#!/bin/sh
+
+read -p "localRepositoryPath(default to ~/workspace/mvn-repository/releases):" localRepositoryPath
+read -p "groupId:" groupId
+read -p "artifactId:" artifactId
+read -p "version:" version
+
+if [ -z $localRepositoryPath ]; then
+	localRepositoryPath="$HOME/workspace/mvn-repository/releases"
+fi
+
+cmd="mvn org.apache.maven.plugins:maven-install-plugin:2.5.1:install-file \
+-Dfile=$1 \
+-DlocalRepositoryPath=$localRepositoryPath \
+-Dpackaging=jar "
+
+if [ -n "$groupId" ]; then
+	cmd="$cmd -DgroupId=$groupId"
+fi
+
+if [ -n "$artifactId" ]; then
+	cmd="$cmd -DartifactId=$artifactId"
+fi
+
+if [ -n "$version" ]; then
+	cmd="$cmd -Dversion=$version"
+fi
+
+$cmd

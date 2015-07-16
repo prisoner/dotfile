@@ -1,63 +1,57 @@
-#! /usr/bin/env python
+#!/usr/bin/python
+#-*- utf-8 -*-
 
-from scriptine import run, path, log, shell
 import os
+import glob
+import shutil
+import subprocess
 
-os_name = os.uname()[0].lower()
-# user_home = os.environ['HOME']
-user_home = "/home/chenpeng/temp/home"
+home = os.path.expandvars("${HOME}")
 
-def _remove_osname(text):
-	return text.replace("_linux", "").replace("_mac", "")
+def links():
+    fs = glob.glob(os.path.join(home, ".dotfile", "link", "*"))
+    for f in fs:
+        bn = os.path.basename(f)
+        dot = os.path.join(home, "." + bn)
+        if os.path.exists(dot):
+            if not os.path.samefile(dot, f):
+                if os.path.isdir(dot):
+                    shutil.rmtree(dot)
+                else:
+                    os.remove(dot)
+                os.symlink(f, dot)
+                print "link %s to %s" % (f, dot)
+        else:
+            os.symlink(f, dot)
+            print "link %s to %s" % (f, dot)
 
-def _get_files_by_os(dir):
-	files = set()
-	for f in path(dir).listdir():
-		abs_path = f.abspath()
-		files.add(_remove_osname(abs_path))
+def links2():
+    links = os.path.join(home, ".dotfile", "conf", "links")
+    with open(links) as f:
+        lks = [line.split('\t') for line in f.read().splitlines()]
+        for item in lks:
+            src = os.path.join(home, ".dotfile", item[0])
+            dest = os.path.join(home, item[1])
+            up = os.path.abspath(os.path.join(dest, os.pardir))
+            if not os.path.isdir(up):
+                os.makedirs(up)
+            try:
+                os.remove(dest)
+                os.symlink(src, dest)
+            except OSError, e:
+                print "link %s to %s err, %s" % (src, dest, e)
+            else:
+                print "link %s to %s" % (src, dest)
 
-	paths = set()
-	for f in files:
-		item = path(f + "_" + os_name)
-		if not item.exists():
-			item = path(f)
-		paths.add(item)
-	return paths
+def pkgs():
+    fs = os.path.join(home, ".dotfile", "conf", "pkgs.lst")
+    print fs
+    with open(fs) as f:
+        for line in f:
+            pkg = line.strip()
+            subprocess.check_call(["sudo", "apt-get", "install", "-y", pkg])
 
-def link_command():
-	paths = _get_files_by_os("link")
-	for item in paths:
-		link = path(user_home + "/." + _remove_osname(item.basename()))
-		if link.exists():
-			link.remove()
-		item.symlink(link)
-		log.mark("link %s to %s", item, link)
-
-def copy_command():
-	paths = _get_files_by_os("copy")
-	for item in paths:
-		link = path(user_home + "/." + _remove_osname(item.basename()))
-		if item.isdir():
-			if link.isdir():
-				shell.call(["rm", "-rf", link])
-			item.copytree(link)
-		if item.isfile():
-			if link.isfile():
-				link.remove()
-			item.copyfile(link)
-		log.mark("copy %s to %s", item, link)
-
-def install_ubuntu_pkg():
-	lines = path("conf/ubuntu_packages.lst").lines()
-	for item in lines:
-		shell.call(["sudo", "apt-get", "install", item.replace("\n", "")])
-	# pkgs = " ".join(lines).replace("\n", "")
-	# cmd = "sudo apt-get install " + pkgs
-
-def init_command():
-	link_command()
-	copy_command()
-	install_ubuntu_pkg()
-
-if __name__ == '__main__':
-	run()
+if __name__ == "__main__":
+    # pkgs()
+    links2()
+    links()
